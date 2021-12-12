@@ -43,8 +43,8 @@ function tmp = velocity_map(data_frames,frame_start,frame_end, params, name)
     Is_Windowed = 1;% 1==> Windowing before doing range and angle fft
     Is_plot_rangeDop = 1;
     
-    saved_fig_folder_name = strcat('./speed_results/',name,'/vis/');
-    saved_mat_folder_name = strcat('./speed_results/',name,'/mat/');
+    saved_fig_folder_name = strcat('/mnt/nas_crdataset2/rodnet/speed_data/',name,'/vis/');
+    saved_mat_folder_name = strcat('/mnt/nas_crdataset2/rodnet/speed_data/',name,'/mat/');
     if ~exist(saved_fig_folder_name, 'dir') % check the folder exist
         mkdir(saved_fig_folder_name);
         sp_folder = strcat(saved_fig_folder_name, 'speed');

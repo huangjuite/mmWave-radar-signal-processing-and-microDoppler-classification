@@ -28,7 +28,7 @@ def mkd(name):
 
 
 save_vis_folder = pjoin(mat_dir, '../vis/sp')
-save_speed_folder = pjoin(mat_dir, '../sp_value')
+save_speed_folder = pjoin(mat_dir, '../sp_full')
 mkd(save_vis_folder)
 mkd(save_speed_folder)
 
@@ -52,7 +52,8 @@ def get_speed(dop, thresh=2e5):
 def save_fig(v, name, vmin=VEL_SCALE*-128, vmax=VEL_SCALE*127):
     # plt.imshow(v, vmin=vmin, vmax=vmax, extent=[-60, 60, 2, 25])
     fig, ax = plt.subplots()
-    im = ax.imshow(v, vmin=vmin, vmax=vmax, extent=[-60, 60, 2, 25])
+    im = ax.imshow(v, origin='lower', vmin=vmin,
+                   vmax=vmax, extent=[-60, 60, 2, 25])
     ax.set_aspect(5)
     fig.colorbar(im)
     plt.savefig(name)
@@ -62,7 +63,7 @@ def save_fig(v, name, vmin=VEL_SCALE*-128, vmax=VEL_SCALE*127):
 for f in tqdm(mat_files):
     frame = int(f[6:12])
     dop_cube = read_mat(pjoin(mat_dir, f))
-    dop_cube = np.flipud(dop_cube)
+    # dop_cube = np.flipud(dop_cube)
     mag, sp = get_speed(dop_cube)
     save_fig(sp, pjoin(save_vis_folder, '%04d.png' % frame))
     np.save(pjoin(save_speed_folder, '%04d.npy' % frame), sp)
