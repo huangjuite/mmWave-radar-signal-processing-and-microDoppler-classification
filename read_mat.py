@@ -1,11 +1,9 @@
 
 import os
 import argparse
-import PIL
 import numpy as np
 import scipy.io as sio
 import matplotlib.pyplot as plt
-from PIL import Image
 from tqdm import tqdm
 from os.path import join as pjoin
 
@@ -28,8 +26,10 @@ def mkd(name):
 
 
 save_vis_folder = pjoin(mat_dir, '../vis/sp')
-save_speed_folder = pjoin(mat_dir, '../sp_full')
+mag_vis_folder = pjoin(mat_dir, '../vis/mask')
+save_speed_folder = pjoin(mat_dir, '../sp_new_full')
 mkd(save_vis_folder)
+mkd(mag_vis_folder)
 mkd(save_speed_folder)
 
 
@@ -49,6 +49,25 @@ def get_speed(dop, thresh=2e5):
     return mag, sp
 
 
+def get_speed_abs(dop, thresh=2000):
+    mag = np.abs(dop)
+    sp = np.argmax(mag, axis=2)
+
+    mag = mag.reshape(-1, 256)
+    mag_std = np.std(mag, axis=1)
+    mag_std = mag_std.reshape(128, 128)
+
+    mask = np.zeros_like(sp)
+    mask[mag_std > thresh] = 1
+    sp = (sp-128) * VEL_SCALE
+    sp *= mask
+
+    # plt.hist(mag_std.reshape(-1),bins=100, range=(0, 10000))
+    # plt.show()
+
+    return mask, sp
+
+
 def save_fig(v, name, vmin=VEL_SCALE*-128, vmax=VEL_SCALE*127):
     # plt.imshow(v, vmin=vmin, vmax=vmax, extent=[-60, 60, 2, 25])
     fig, ax = plt.subplots()
@@ -64,6 +83,8 @@ for f in tqdm(mat_files):
     frame = int(f[6:12])
     dop_cube = read_mat(pjoin(mat_dir, f))
     # dop_cube = np.flipud(dop_cube)
-    mag, sp = get_speed(dop_cube)
+    # mag, sp = get_speed(dop_cube)
+    mask, sp = get_speed_abs(dop_cube)
     save_fig(sp, pjoin(save_vis_folder, '%04d.png' % frame))
+    save_fig(mask, pjoin(mag_vis_folder, '%04d.png' % frame), vmin=0, vmax=1)
     np.save(pjoin(save_speed_folder, '%04d.npy' % frame), sp)

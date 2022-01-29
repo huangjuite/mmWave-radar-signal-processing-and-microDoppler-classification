@@ -1,5 +1,6 @@
 #! /bin/bash
 
+python read_mat.py /mnt/nas_crdataset2/rodnet/speed_data/2019_05_28_cm1s013/mat/
 python read_mat.py /mnt/nas_crdataset2/rodnet/speed_data/2019_05_28_mlms005/mat/
 python read_mat.py /mnt/nas_crdataset2/rodnet/speed_data/2019_05_28_pbms006/mat/
 python read_mat.py /mnt/nas_crdataset2/rodnet/speed_data/2019_05_28_pcms004/mat/

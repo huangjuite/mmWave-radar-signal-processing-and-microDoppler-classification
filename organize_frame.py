@@ -52,7 +52,7 @@ def trim_frame(folder, offset):
     offset += 40
     files = os.listdir(folder)
     files.sort()
-    new_folder = pjoin(folder, '../sp_map')
+    new_folder = pjoin(folder, '../sp_new')
     try:
         os.mkdir(new_folder)
     except:
