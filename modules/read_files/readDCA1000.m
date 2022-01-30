@@ -3,7 +3,6 @@
 %%% Command to run in Matlab GUI -readDCA1000('<ADC capture bin file>') 
 function [retVal] = readDCA1000(folder_locaion, numADCSamples)
 %% global variables
-disp('global variable')
 % change based on sensor config
 % numADCSamples = 128; % number of ADC samples per chirp should be variable
 numADCBits = 16; % number of ADC bits per sample
@@ -17,7 +16,7 @@ adcData = [];
 files = dir(folder_locaion); % find all the files under the folder
 n_files = length(files);
 processed_files = [3:n_files];
-disp('processing files')
+
 for index = 1:length(processed_files)
     inum = processed_files(index);
     file_name = files(inum).name;
