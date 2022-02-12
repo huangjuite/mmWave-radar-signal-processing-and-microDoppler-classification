@@ -85,6 +85,7 @@ function tmp = velocity_map(data_frames,frame_start,frame_end, params, name)
         Dopdata_crop = Dopdata(num_crop+1:fft_Rang-num_crop, :, :);
         mat_name = strcat(saved_mat_folder_name,'frame_',num2str(i-1,'%06d'),'.mat');
         save(mat_name, 'Dopdata_crop');
+        disp(mat_name);
         
         save_SP = 0;
         if save_SP
