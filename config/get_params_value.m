@@ -12,7 +12,7 @@ params.sweepSlope = 21.0017e12;
 params.samples = 128;
 params.loop = 255;
 
-params.Tc = 120e-6; % us
+params.Tc = 90e-6; % us
 params.fft_Rang = 134; % 134=>128
 params.fft_Vel = 256;
 params.fft_Ang = 128;

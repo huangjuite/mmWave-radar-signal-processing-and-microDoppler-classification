@@ -3,11 +3,15 @@ import os
 import argparse
 import numpy as np
 import scipy.io as sio
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 from os.path import join as pjoin
 
-VEL_SCALE = 0.0633692797111743
+VEL_MAX = 10.7305313644255
+VEL_MIN = -10.8150237373737
+VEL_SCALE = (VEL_MAX - VEL_MIN)/255
 
 parser = argparse.ArgumentParser(description='read mat file.')
 parser.add_argument('directory', help='directory of mat files.')
@@ -27,7 +31,7 @@ def mkd(name):
 
 save_vis_folder = pjoin(mat_dir, '../vis/sp')
 mag_vis_folder = pjoin(mat_dir, '../vis/mask')
-save_speed_folder = pjoin(mat_dir, '../sp_new_full')
+save_speed_folder = pjoin(mat_dir, '../sp_map')
 mkd(save_vis_folder)
 mkd(mag_vis_folder)
 mkd(save_speed_folder)
