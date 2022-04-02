@@ -6,6 +6,7 @@ function [axh] = plot_pointclouds(detout)
 figure('visible','on')
 % x-direction: Doppler, y-direction: angle, z-direction: range
 [axh] = scatter3(detout(:, 6), detout(:, 7), detout(:, 5), 'filled');
+view(0,90);
 xlabel('Doppler velocity (m/s)')
 ylabel('Azimuth angle (degrees)')
 zlabel('Range (m)')

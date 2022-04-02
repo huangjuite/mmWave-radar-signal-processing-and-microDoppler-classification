@@ -1,4 +1,4 @@
-function ra = generate_ra_3dfft_function(params, data_frames, frame_start, frame_end, data_each_frame, offset, save_det_dir)
+function ra = generate_ra_3dfft_function(params, data_frames, frame_start, frame_end, data_each_frame, offset, save_det_dir, vis_save_dir)
     % constant parameters
     c = params.c; % Speed of light in air (m/s)
     fc = params.fc; % Center frequency (Hz)
@@ -118,9 +118,6 @@ for i = frame_start:frame_end
         save_det_data2(rng_excd_list, :) = [];
     end
     
-    % Plot range-angle (RA) image
-%     [axh] = plot_rangeAng(Angdata_crop,rng_grid(num_crop+1:fft_Rang-num_crop),agl_grid);
-    
     % Point obtained clouds
 %     plot_pointclouds(save_det_data);
     
@@ -129,6 +126,14 @@ for i = frame_start:frame_end
     else
         det = cat(1, det, save_det_data2);
     end
+    
+    % Plot range-angle (RA) image
+    [axh] = plot_rangeAng(Angdata_crop,rng_grid(num_crop+1:fft_Rang-num_crop),agl_grid, save_det_data);
+    if ~exist(vis_save_dir, 'dir')
+        mkdir(vis_save_dir)
+    end
+    image_save_path = strcat(vis_save_dir,'/frame_',num2str(i-1,'%06d'),'.png');
+    saveas(axh,image_save_path,'png');
     
 end
 writematrix(det, save_det_dir, 'Delimiter',' ');

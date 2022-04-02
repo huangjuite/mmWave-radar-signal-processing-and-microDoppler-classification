@@ -1,5 +1,5 @@
 % plot range-angle heatmap
-function [axh] = plot_rangeAng(Xcube,rng_grid,agl_grid)
+function [axh] = plot_rangeAng(Xcube,rng_grid,agl_grid, detout)
 Nr = size(Xcube,1);   %%%length of Chirp(num of rangeffts)
 Ne = size(Xcube,2);   %%%number of angleffts
 Nd = size(Xcube,3);   %%%length of chirp loop
@@ -20,12 +20,20 @@ Xpow = squeeze(sum(Xpow,3)/size(Xpow,3));
 % noisefloor = db2pow(-15);
 Xsnr=Xpow;
 % Xsnr = pow2db(Xpow/noisefloor);
+Zs = ones(size(detout(:, 7)))
+Zs = Zs * max(max(Xsnr))
+
+
 
 figure('visible','off')
 % figure()
 set(gcf,'Position',[10,10,530,420])
+hold on
 [axh] = surf(agl_grid,rng_grid,Xsnr);
+[axh2] = scatter3(detout(:, 7), detout(:, 5), Zs,[],'red', 'filled');
+hold off
 view(0,90)
+
 % axis([-90 90 0 25]);
 axis([-60 60 2 25]);
 grid off
